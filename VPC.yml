@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Trying to create 2tier Vpc which includes 4 subnets
+  details about
+  the template.
+Parameters:
+  VpcCidr:
+    Type: String
+    Default: 10.10.0.0/16
+Resources:
+  MyVpc:
+    Type: AWS::EC2::VPC
+  Properties:
+    CidrBlock: 
+      Ref: VpcCidr
+    EnableDnsHostnames: true
+    EnableDnsSupport: true
+    InstanceTenancy: default
+    Tags:
+     - Name: vpcshiva
