@@ -24,12 +24,12 @@ Parameters:
     Type: String
     Default: 10.10.4.0/24
   MyZone:
-  Description: Select the MyAZone
-  Type: String
-  Default: ap-south-1
-  AllowedValues:
-  - ap-south-1
-  - ap-southeast-1
+    Description: Select the MyAZone
+    Type: String
+    Default: ap-south-1
+    AllowedValues:
+    - ap-south-1
+    - ap-southeast-1
   
 Resources:
   MyVpc:
