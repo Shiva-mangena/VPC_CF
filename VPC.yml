@@ -48,7 +48,9 @@ Resources:
     Properties: 
       VpcId:
         Ref: MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone: Fn::Select: 
+        - 0
+        - Fn::GetAZs: ""
       CidrBlock: !Ref Publicsub1CIDR
       MapPublicIpOnLaunch: true
       Tags: 
@@ -58,7 +60,9 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId: !Ref MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone:Fn::Select: 
+        - 1
+        - Fn::GetAZs: ""
       CidrBlock: !Ref Publicsub2CIDR
       MapPublicIpOnLaunch: true
       Tags: 
@@ -69,7 +73,9 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId: !Ref MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone:Fn::Select: 
+        - 0
+        - Fn::GetAZs: ""
       CidrBlock: !Ref Privatesub1CIDR
       MapPublicIpOnLaunch: false
       Tags: 
@@ -79,7 +85,9 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId: !Ref MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone: Fn::Select: 
+        - 1
+        - Fn::GetAZs: ""
       CidrBlock: !Ref Privatesub2CIDR
       MapPublicIpOnLaunch: false
       Tags: 
