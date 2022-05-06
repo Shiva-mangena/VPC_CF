@@ -9,81 +9,81 @@ Parameters:
 
   VpcCidr:
     Type: String
-    Default: 10.10.0.0/16
+    Default: 10.192.0.0/16
 
   Publicsub1CIDR:
     Type: String
-    Default: 10.10.1.0/24
+    Default: 10.192.10.0/24
   Publicsub2CIDR:
     Type: String
-    Default: 10.10.2.0/24
+    Default: 10.192.11.0/24
   Privatesub1CIDR:
     Type: String
-    Default: 10.10.3.0/24
+    Default: 10.192.20.0/24
   Privatesub2CIDR:
     Type: String
-    Default: 10.10.4.0/24
+    Default: 10.192.21.0/24
   MyZone:
     Description: Select the MyAZone
     Type: String
-    Default: ap-south-1
+    Default: ap-south-1a
     AllowedValues:
-    - ap-south-1
-    - ap-southeast-1
+    - ap-south-1a
+    - ap-south-1b
   
 Resources:
   MyVpc:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: ! Ref VpcCidr
+      CidrBlock: !Ref VpcCidr
       EnableDnsHostnames: true
       EnableDnsSupport: true
       InstanceTenancy: default
       Tags:
       - Key: Name 
-        Value: ! Ref EnvironmentName
+        Value: !Ref EnvironmentName
 
   Publicwebsub1:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId:
         Ref: MyVpc
-      AvailabilityZone: ! Ref MyZone
-      CidrBlock: ! Ref Publicsub1CIDR
+      AvailabilityZone: !Ref MyZone
+      CidrBlock: !Ref Publicsub1CIDR
       MapPublicIpOnLaunch: true
       Tags: 
       - Key: Name 
-        Value: ! Sub ${EnvironmentName} Public Subnet (AZ1)
+        Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
   Publicwebsub2:
     Type: AWS::EC2::Subnet
     Properties: 
-      VpcId: ! Ref MyVpc
-      AvailabilityZone: ! Ref MyZone
-      CidrBlock: ! Ref Publicsub2CIDR
+      VpcId: !Ref MyVpc
+      AvailabilityZone: !Ref MyZone
+      CidrBlock: !Ref Publicsub2CIDR
       MapPublicIpOnLaunch: true
       Tags: 
       - Key: Name 
-        Value: ! Sub ${EnvironmentName} Public Subnet (AZ2)
+        Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
 
   Privatesub1:
     Type: AWS::EC2::Subnet
     Properties: 
-      VpcId: ! Ref MyVpc
-      AvailabilityZone: ! Ref MyZone
-      CidrBlock: ! Ref Privatesub1CIDR
-      MapPublicIpOnLaunch: flase
+      VpcId: !Ref MyVpc
+      AvailabilityZone: !Ref MyZone
+      CidrBlock: !Ref Privatesub1CIDR
+      MapPublicIpOnLaunch: false
       Tags: 
       - Key: Name 
-        Value: ! Sub ${EnvironmentName} Private Subnet (AZ1)
+        Value: !Sub ${EnvironmentName} Private Subnet (AZ1)
   Privatesub2:
     Type: AWS::EC2::Subnet
     Properties: 
-      VpcId: ! Ref MyVpc
-      AvailabilityZone: ! Ref MyZone
-      CidrBlock: ! Ref Privatesub2CIDR
-      MapPublicIpOnLaunch: flase
+      VpcId: !Ref MyVpc
+      AvailabilityZone: !Ref MyZone
+      CidrBlock: !Ref Privatesub2CIDR
+      MapPublicIpOnLaunch: false
       Tags: 
       - Key: Name 
-        Value: ! Sub ${EnvironmentName} Private Subnet (AZ2)
+        Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
 
 
