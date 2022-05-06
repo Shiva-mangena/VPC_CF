@@ -26,10 +26,10 @@ Parameters:
   MyZone:
   Description: Select the MyAZone
   Type: String
-  Default: us-east-1
+  Default: ap-south-1
   AllowedValues:
-  - us-east-1
-  - us-east-2
+  - ap-south-1
+  - ap-southeast-1
   
 Resources:
   MyVpc:
