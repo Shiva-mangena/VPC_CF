@@ -23,13 +23,15 @@ Parameters:
   Privatesub2CIDR:
     Type: String
     Default: 10.192.21.0/24
-  MyZone:
-    Description: Select the MyAZone
+ ## MyZone:
+   # Description: Select the MyAZone
+   # Type: String
+    #Default: ap-south-1a
+    #AllowedValues:
+    #- ap-south-1a
+    #- ap-south-1b
+  KeyPairname:
     Type: String
-    Default: ap-south-1a
-    AllowedValues:
-    - ap-south-1a
-    - ap-south-1b
   
 Resources:
   MyVpc:
@@ -48,7 +50,10 @@ Resources:
     Properties: 
       VpcId:
         Ref: MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone:
+        Fn::Select: 
+          - 0
+          - Fn::GetAZs: ""
       CidrBlock: !Ref Publicsub1CIDR
       MapPublicIpOnLaunch: true
       Tags: 
@@ -58,7 +63,10 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId: !Ref MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone:  
+        Fn::Select: 
+          - 1
+          - Fn::GetAZs: ""
       CidrBlock: !Ref Publicsub2CIDR
       MapPublicIpOnLaunch: true
       Tags: 
@@ -69,7 +77,10 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId: !Ref MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone:
+        Fn::Select: 
+          - 0
+          - Fn::GetAZs: ""
       CidrBlock: !Ref Privatesub1CIDR
       MapPublicIpOnLaunch: false
       Tags: 
@@ -79,11 +90,23 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties: 
       VpcId: !Ref MyVpc
-      AvailabilityZone: !Ref MyZone
+      AvailabilityZone: 
+        Fn::Select: 
+          - 1
+          - Fn::GetAZs: ""
       CidrBlock: !Ref Privatesub2CIDR
       MapPublicIpOnLaunch: false
       Tags: 
       - Key: Name 
         Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
-
+        
+  MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: ami-0756a1c858554433e
+      KeyName: !Ref KeyPairname
+      InstanceType: t2.micro
+      SubnetId: !Ref Publicwebsub1
+      
+       
 
